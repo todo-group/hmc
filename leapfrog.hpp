@@ -1,8 +1,12 @@
+#pragma once
+
 #include <vector>
 
-template<class MODEL>
-void leapfrog(std::size_t dim, std::size_t loop, double epsilon, const MODEL& model,
-              std::vector<double> *x, std::vector<double> *p, std::vector<double> *f) {
+namespace hmc {
+
+template<class MODEL, class T>
+void leapfrog(std::size_t dim, std::size_t loop, T epsilon, const MODEL& model,
+              std::vector<T> *x, std::vector<T> *p, std::vector<T> *f /* work */) {
   if (loop > 0) {
     model.force(*x, f);
     for (std::size_t j = 0; j < dim; ++j) (*p)[j] += 0.5 * epsilon * (*f)[j];
@@ -15,4 +19,6 @@ void leapfrog(std::size_t dim, std::size_t loop, double epsilon, const MODEL& mo
     model.force(*x, f);
     for (std::size_t j = 0; j < dim; ++j) (*p)[j] += 0.5 * epsilon * (*f)[j];
   }
+}
+
 }

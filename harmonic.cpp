@@ -13,7 +13,7 @@ int main() {
   std::mt19937 engine(seed);
 
   model m;
-  hmc mc(m);
+  hmc::hmc mc(m);
 
   std::vector<double> x(m.dimension(), 0);
   int accepted = 0;
