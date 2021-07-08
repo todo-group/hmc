@@ -21,4 +21,9 @@ void leapfrog(std::size_t dim, std::size_t loop, T eps, const MODEL& model,
   }
 }
 
+template<class MODEL, class T>
+void leapfrog(std::size_t dim, T eps, const MODEL& model, std::vector<T> *x, std::vector<T> *p, std::vector<T> *f /* work */) {
+  leapfrog(dim, 1, eps, model, x, p, f);
+}
+
 }

@@ -9,12 +9,20 @@ namespace hmc {
 
 class hmc {
 public:
-  hmc(std::size_t dim) : dim_(dim), x_(dim_), p_(dim_), f_(dim_) {}
+  hmc(std::size_t dim) { init(dim); }
   template<class MODEL>
-  hmc(const MODEL& model) : dim_(model.dimension()), x_(dim_), p_(dim_), f_(dim_) {}
+  hmc(const MODEL& model) { init(model.dimension()); }
+
+  void init(std::size_t dim) {
+    dim_ = dim;
+    x_.resize(dim_);
+    p_.resize(dim_);
+    f_.resize(dim_);
+  }
+
   template<class MODEL, class RNG>
   bool step(std::size_t loop, double eps, const MODEL& model, RNG& rng,
-            std::vector<double> *x_in) {
+            std::vector<double> *x_in) const {
     std::uniform_real_distribution<double> uniform(0, 1);
     std::normal_distribution<double> gauss(0, 1);
 
@@ -37,9 +45,7 @@ public:
 
 private:
   std::size_t dim_;
-  std::vector<double> x_; // positions
-  std::vector<double> p_; // momenta
-  std::vector<double> f_; // work for storing force in lepfrog
+  mutable std::vector<double> x_, p_, f_;
 };
 
 }
