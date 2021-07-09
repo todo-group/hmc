@@ -18,7 +18,7 @@ int main() {
   std::vector<double> x(m.dimension(), 0);
   int accepted = 0;
   for (int i = 0; i < (therm + steps); ++i) {
-    int len = mc.step(0, epsilon, m, engine, &x);
+    int len = mc.step(epsilon, m, engine, &x);
     accepted += len;
     if (i >= therm) {
       std::cout << i;

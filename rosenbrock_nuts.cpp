@@ -1,9 +1,9 @@
 #include <random>
 #include <iostream>
-#include "nuts0.hpp"
-#include "harmonic.hpp"
+#include "nuts.hpp"
+#include "rosenbrock.hpp"
 
-typedef harmonic model;
+typedef rosenbrock model;
 
 int main() {
   int seed = 1234;
@@ -13,7 +13,7 @@ int main() {
   std::mt19937 engine(seed);
 
   model m;
-  hmc::nuts0 mc(m);
+  hmc::nuts mc(m);
 
   std::vector<double> x(m.dimension(), 0);
   int accepted = 0;

@@ -7,8 +7,8 @@ find_package(Boost REQUIRED)
 include_directories(${Boost_INCLUDE_DIRS})
 
 set(PROGS bimodal harmonic rosenbrock
-          bimodal_nuts0 harmonic_nuts0
-          bimodal_nuts harmonic_nuts)
+          bimodal_nuts0 harmonic_nuts0 rosenbrock_nuts0
+          bimodal_nuts harmonic_nuts rosenbrock_nuts)
 foreach(name ${PROGS})
   add_executable(${name} ${name}.cpp)
 endforeach(name ${PROGS})

@@ -1,9 +1,9 @@
 #include <random>
 #include <iostream>
 #include "nuts0.hpp"
-#include "harmonic.hpp"
+#include "rosenbrock.hpp"
 
-typedef harmonic model;
+typedef rosenbrock model;
 
 int main() {
   int seed = 1234;

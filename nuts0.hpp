@@ -19,6 +19,10 @@ public:
   template<class MODEL, class RNG>
   uint_t step(uint_t /* loop */, double eps, const MODEL& m, RNG& rng,
               std::vector<double> *x) const {
+    return step(eps, m, rng, x);
+  }
+  template<class MODEL, class RNG>
+  uint_t step(double eps, const MODEL& m, RNG& rng, std::vector<double> *x) const {
     std::uniform_real_distribution<double> uniform(0, 1);
     std::normal_distribution<double> gauss(0, 1);
     for (uint_t i = 0; i < dim_; ++i) p_[i] = gauss(rng);
