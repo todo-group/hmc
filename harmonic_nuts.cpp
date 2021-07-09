@@ -8,7 +8,7 @@ typedef harmonic model;
 int main() {
   int seed = 1234;
   int steps = 1000000;
-  int therm = 0; //steps / 10;
+  int therm = steps / 10;
   double epsilon = 0.1;
   std::mt19937 engine(seed);
 

@@ -35,17 +35,17 @@ public:
     bool to_continue = true;
     while (to_continue) {
       if (tb_ != 0) std::cerr << "error\n";
-      ++j;
-      check_capacity(j+1);
+      check_capacity(j + 2);
       int v = (uniform(rng) > 0.5) ? 1 : -1; // v = 1 (-1) for going right (left)
       tree_[tb_].copy(v, x, &p_);
-      for (uint_t i = 0; i < (1 << (j - 1)); ++i) {
+      for (uint_t i = 0; i < (1 << j); ++i) {
         leapfrog(dim_, v * eps, m, x, &p_, &force_);
         double ene = energy(m, *x, p_);
         if (logu > delta_max_ - ene) { to_continue = false; break; }
         tree_[++tb_].init(*x, p_, (logu < -ene));
         if (!(to_continue = merge(v, rng))) break;
       }
+      ++j;
     }
     std::copy(tree_[0].x_next.begin(), tree_[0].x_next.end(), x->begin());
     return tree_[0].n;
@@ -88,28 +88,36 @@ protected:
   };
   
   template<class RNG>
-  bool merge(int v, RNG rng) const {
+  bool merge(int v, RNG& rng) const {
     std::uniform_real_distribution<double> uniform(0, 1);
     bool not_turn = true;
     while (tb_ > 0 && tree_[tb_].level == tree_[tb_-1].level) {
-      if (v == 1) {
-        std::swap(tree_[tb_-1].x_plus, tree_[tb_].x_plus);
-        std::swap(tree_[tb_-1].p_plus, tree_[tb_].p_plus);
+      if (not_turn) {
+        if (v == 1) {
+          std::swap(tree_[tb_-1].x_plus, tree_[tb_].x_plus);
+          std::swap(tree_[tb_-1].p_plus, tree_[tb_].p_plus);
+        } else {
+          std::swap(tree_[tb_-1].x_minus, tree_[tb_].x_minus);
+          std::swap(tree_[tb_-1].p_minus, tree_[tb_].p_minus);
+        }
+        if (tb_ == 1) {
+          if (uniform(rng) < 1.0 * tree_[tb_].n / tree_[tb_-1].n) {
+            std::swap(tree_[tb_-1].x_next, tree_[tb_].x_next);
+          }
+        } else {
+          if (uniform(rng) < 1.0 * tree_[tb_].n / (tree_[tb_-1].n + tree_[tb_].n)) {
+            std::swap(tree_[tb_-1].x_next, tree_[tb_].x_next);
+          }
+        }
+        tree_[tb_-1].n += tree_[tb_].n;
+        ++tree_[tb_-1].level;
+        --tb_;
+        not_turn &= tree_[tb_].not_turn();
       } else {
-        std::swap(tree_[tb_-1].x_minus, tree_[tb_].x_minus);
-        std::swap(tree_[tb_-1].p_minus, tree_[tb_].p_minus);
+        tree_[tb_-1].n += tree_[tb_].n;
+        ++tree_[tb_-1].level;
+        --tb_;
       }
-      if (tb_ == 1) {
-        if (uniform(rng) < 1.0 * tree_[tb_].n / tree_[tb_-1].n)
-          std::swap(tree_[tb_-1].x_next, tree_[tb_].x_next);
-      } else {
-        if (uniform(rng) < 1.0 * tree_[tb_].n / (tree_[tb_-1].n + tree_[tb_].n))
-          std::swap(tree_[tb_-1].x_next, tree_[tb_].x_next);
-      }
-      tree_[tb_-1].n += tree_[tb_].n;
-      ++tree_[tb_-1].level;
-      --tb_;
-      not_turn &= tree_[tb_].not_turn();
     }
     return not_turn;
   }

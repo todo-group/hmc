@@ -42,7 +42,7 @@ public:
         std::tie(dummy1, dummy2, x_p, p_p, xprime, nprime, sprime) = buildtree(x_p, p_p, logu, 1, j, eps, m, rng);
       }
       if (sprime == 1) {
-        if(uniform(rng) < 1.0 * nprime / n) new_x = xprime;
+        if (uniform(rng) < 1.0 * nprime / n) new_x = xprime;
       }
       n += nprime;
       s = sprime * I(dot(x_p, p_m) - dot(x_m, p_m) >= 0) * I(dot(x_p, p_p) - dot(x_m, p_p) >= 0);
@@ -76,7 +76,7 @@ protected:
       int sprime = I(logu < delta_max_ - ene);
       return {x_m, p_m, x_p, p_p, xprime, nprime, sprime};
     } else {
-      auto [x_m, p_m, x_p, p_p, xprime, nprime, sprime] = buildtree(x, p, logu, -1, j-1, eps, m, rng);
+      auto [x_m, p_m, x_p, p_p, xprime, nprime, sprime] = buildtree(x, p, logu, v, j-1, eps, m, rng);
       if (sprime==1) {
         int npp;
         int spp;
@@ -86,9 +86,7 @@ protected:
         } else {
           std::tie(dummy1, dummy2, x_p, p_p, xpp, npp, spp) = buildtree(x_p, p_p, logu, 1, j - 1, eps, m, rng);
         }
-        if (nprime != 0 && uniform(rng) < 1.0 * npp / (nprime + npp)) {
-          xprime = xpp;
-        }
+        if (spp && uniform(rng) < 1.0 * npp / (nprime + npp)) xprime = xpp;
         sprime = spp * I(dot(x_p, p_m) - dot(x_m,p_m) >=0) * I(dot(x_p, p_p) - dot(x_m, p_p) >= 0);
         nprime += npp;     
       }
