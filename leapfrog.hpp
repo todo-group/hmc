@@ -5,9 +5,10 @@
 namespace hmc {
 
 template<class MODEL, class T>
-void leapfrog(std::size_t dim, std::size_t loop, T eps, const MODEL& model,
-              std::vector<T> *x, std::vector<T> *p, std::vector<T> *f /* work */) {
+void leapfrog(std::size_t loop, T eps, const MODEL& model, std::vector<T> *x, std::vector<T> *p,
+              std::vector<T> *f /* work */) {
   if (loop > 0) {
+    auto dim = model.dimension();
     model.force(*x, f);
     for (std::size_t j = 0; j < dim; ++j) (*p)[j] += 0.5 * eps * (*f)[j];
     for (std::size_t i = 1; i < loop; ++i) {
@@ -22,8 +23,9 @@ void leapfrog(std::size_t dim, std::size_t loop, T eps, const MODEL& model,
 }
 
 template<class MODEL, class T>
-void leapfrog(std::size_t dim, T eps, const MODEL& model, std::vector<T> *x, std::vector<T> *p, std::vector<T> *f /* work */) {
-  leapfrog(dim, 1, eps, model, x, p, f);
+void leapfrog(T eps, const MODEL& model, std::vector<T> *x, std::vector<T> *p,
+              std::vector<T> *f /* work */) {
+  leapfrog(1, eps, model, x, p, f);
 }
 
 }

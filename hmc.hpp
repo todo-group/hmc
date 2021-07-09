@@ -31,7 +31,7 @@ public:
     for (std::size_t i = 0; i < dim_; ++i) p_[i] = gauss(rng);
     double ene = energy(model, x_, p_);
 
-    leapfrog(dim_, loop, eps, model, &x_, &p_, &f_);
+    leapfrog(loop, eps, model, &x_, &p_, &f_);
 
     // metropolis filter
     double ene_new = energy(model, x_, p_);

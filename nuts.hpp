@@ -39,7 +39,7 @@ public:
       int v = (uniform(rng) > 0.5) ? 1 : -1; // v = 1 (-1) for going right (left)
       tree_[tb_].copy(v, x, &p_);
       for (uint_t i = 0; i < (1 << j); ++i) {
-        leapfrog(dim_, v * eps, m, x, &p_, &force_);
+        leapfrog(v * eps, m, x, &p_, &force_);
         double ene = energy(m, *x, p_);
         if (logu > delta_max_ - ene) { to_continue = false; break; }
         tree_[++tb_].init(*x, p_, (logu < -ene));

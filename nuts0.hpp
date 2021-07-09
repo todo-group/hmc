@@ -64,7 +64,7 @@ protected:
     if (j==0) {
       std::vector<double> xprime(x);
       std::vector<double> pprime(p);
-      leapfrog(dim_, v * eps, m, &xprime, &pprime, &force_);
+      leapfrog(v * eps, m, &xprime, &pprime, &force_);
       
       std::vector<double> x_m = xprime;
       std::vector<double> p_m = pprime;
