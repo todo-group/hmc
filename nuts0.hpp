@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <random>
+#include <tuple>
 #include "energy.hpp"
 #include "leapfrog.hpp"
 
@@ -78,9 +79,11 @@ protected:
       double ene = energy(m, xprime, pprime);
       int nprime = I(logu < -ene);
       int sprime = I(logu < delta_max_ - ene);
-      return {x_m, p_m, x_p, p_p, xprime, nprime, sprime};
+      return std::make_tuple(x_m, p_m, x_p, p_p, xprime, nprime, sprime);
     } else {
-      auto [x_m, p_m, x_p, p_p, xprime, nprime, sprime] = buildtree(x, p, logu, v, j-1, eps, m, rng);
+      std::vector<double> xprime;
+      int nprime, sprime;
+      std::tie(x_m, p_m, x_p, p_p, xprime, nprime, sprime) = buildtree(x, p, logu, v, j-1, eps, m, rng);
       if (sprime==1) {
         int npp;
         int spp;
@@ -94,7 +97,7 @@ protected:
         sprime = spp * I(dot(x_p, p_m) - dot(x_m,p_m) >=0) * I(dot(x_p, p_p) - dot(x_m, p_p) >= 0);
         nprime += npp;     
       }
-      return {x_m, p_m, x_p, p_p, xprime, nprime, sprime};
+      return std::make_tuple(x_m, p_m, x_p, p_p, xprime, nprime, sprime);
     }
   }
 

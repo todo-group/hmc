@@ -1,5 +1,7 @@
+#pragma once
+
 #include <vector>
-#include <boost/math/differentiation/autodiff.hpp>
+#include "force.hpp"
 
 struct rosenbrock {
 private:
@@ -17,11 +19,6 @@ public:
   // F = -grad V
   template<class T>
   void force(const std::vector<T>& x, std::vector<T> *f) const {
-    auto const fvar = boost::math::differentiation::make_ftuple<double, 1, 1>(x[0], x[1]);
-    auto const& x0_fvar = std::get<0>(fvar);
-    auto const& x1_fvar = std::get<1>(fvar);
-    auto p = potential(x0_fvar, x1_fvar);
-    (*f)[0] = -p.derivative(1, 0);
-    (*f)[1] = -p.derivative(0, 1);
+    force_ad_2d(*this, x, f);
   }
 };

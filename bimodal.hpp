@@ -3,16 +3,8 @@
 #include <boost/math/differentiation/autodiff.hpp>
 
 struct bimodal {
-private:
-  static constexpr double cx0 = 3;
-  static constexpr double cy0 = 2;
-  static constexpr double s0 = 1;
-  static constexpr double w0 = 0.7;
-  static constexpr double cx1 = -1;
-  static constexpr double cy1 = -0.5;
-  static constexpr double s1 = 0.5;
-  static constexpr double w1 = 1 - w0;
 public:
+  bimodal() : cx0(3), cy0(2), s0(1), w0(0.7), cx1(-1), cy1(-0.5), s1(0.5), w1(1 - w0) {}
   std::size_t dimension() const { return 2; }
   // V = -log W
   template<class T>
@@ -39,4 +31,6 @@ protected:
     return exp(-((x - cx) * (x - cx) + (y - cy) * (y - cy)) / (2 * sig * sig))
       / (sig * sqrt(2 * M_PI));
   }
+private:
+  double cx0, cy0, s0, w0, cx1, cy1, s1, w1;
 };
