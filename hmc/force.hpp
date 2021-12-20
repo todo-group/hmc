@@ -3,6 +3,8 @@
 #include <vector>
 #include <boost/math/differentiation/autodiff.hpp>
 
+namespace hmc {
+
 template<class MODEL, class T>
 void force_ad_1d(const MODEL& model, const std::vector<T>& x, std::vector<T> *f) {
   auto x0_fvar = boost::math::differentiation::make_fvar<double, 1>(x[0]);
@@ -18,4 +20,6 @@ void force_ad_2d(const MODEL& model, const std::vector<T>& x, std::vector<T> *f)
   auto p = model.potential(x0_fvar, x1_fvar);
   (*f)[0] = -p.derivative(1, 0);
   (*f)[1] = -p.derivative(0, 1);
+}
+
 }

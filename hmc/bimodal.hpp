@@ -1,6 +1,10 @@
+#pragma once
+
 #include <cmath>
 #include <vector>
 #include <boost/math/differentiation/autodiff.hpp>
+
+namespace hmc {
 
 struct bimodal {
 public:
@@ -34,3 +38,5 @@ protected:
 private:
   double cx0, cy0, s0, w0, cx1, cy1, s1, w1;
 };
+
+}

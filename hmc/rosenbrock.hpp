@@ -3,6 +3,8 @@
 #include <vector>
 #include "force.hpp"
 
+namespace hmc {
+
 struct rosenbrock {
 private:
   static constexpr double a = 1;
@@ -22,3 +24,5 @@ public:
     force_ad_2d(*this, x, f);
   }
 };
+
+}

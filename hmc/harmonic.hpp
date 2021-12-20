@@ -1,6 +1,10 @@
+#pragma once
+
 #include <cmath>
 #include <vector>
 #include <boost/math/differentiation/autodiff.hpp>
+
+namespace hmc {
 
 struct harmonic {
 public:
@@ -18,3 +22,5 @@ public:
     (*f)[0] = -p.derivative(1);
   }
 };
+
+}

@@ -1,9 +1,9 @@
 #include <random>
 #include <iostream>
-#include "hmc.hpp"
-#include "rosenbrock.hpp"
+#include "hmc/hmc.hpp"
+#include "hmc/rosenbrock.hpp"
 
-typedef rosenbrock model;
+typedef hmc::rosenbrock model;
 
 int main() {
   int seed = 1234;

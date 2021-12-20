@@ -1,9 +1,9 @@
 #include <random>
 #include <iostream>
-#include "nuts0.hpp"
-#include "bimodal.hpp"
+#include "hmc/nuts0.hpp"
+#include "hmc/bimodal.hpp"
 
-typedef bimodal model;
+typedef hmc::bimodal model;
 
 int main() {
   int seed = 1234;

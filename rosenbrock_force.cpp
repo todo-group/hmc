@@ -1,8 +1,8 @@
 #include <random>
 #include <iostream>
 #include <gtest/gtest.h>
-#include "rosenbrock.hpp"
-#include "force.hpp"
+#include "hmc/rosenbrock.hpp"
+#include "hmc/force.hpp"
 
 TEST(RosenbrockTest, RosenbrockTest) {
   int seed = 1234;
@@ -10,7 +10,7 @@ TEST(RosenbrockTest, RosenbrockTest) {
   std::mt19937 engine(seed);
   std::uniform_real_distribution<> dist;
 
-  rosenbrock m;
+  hmc::rosenbrock m;
   int dim = 2;
 
   std::vector<double> x(dim);

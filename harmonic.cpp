@@ -1,9 +1,9 @@
 #include <random>
 #include <iostream>
-#include "hmc.hpp"
-#include "harmonic.hpp"
+#include "hmc/hmc.hpp"
+#include "hmc/harmonic.hpp"
 
-typedef harmonic model;
+typedef hmc::harmonic model;
 
 int main() {
   int seed = 1234;
