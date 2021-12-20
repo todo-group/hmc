@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <vector>
-#include <boost/math/differentiation/autodiff.hpp>
 
 namespace hmc {
 
@@ -17,9 +16,7 @@ public:
   // F = -grad V
   template<class T>
   void force(const std::vector<T>& x, std::vector<T> *f) const {
-    auto x0_fvar = boost::math::differentiation::make_fvar<double, 1>(x[0]);
-    auto p = potential(x0_fvar);
-    (*f)[0] = -p.derivative(1);
+    (*f)[0] = -2 * x[0];
   }
 };
 

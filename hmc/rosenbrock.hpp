@@ -1,7 +1,6 @@
 #pragma once
 
 #include <vector>
-#include "force.hpp"
 
 namespace hmc {
 
@@ -21,7 +20,8 @@ public:
   // F = -grad V
   template<class T>
   void force(const std::vector<T>& x, std::vector<T> *f) const {
-    force_ad_2d(*this, x, f);
+    (*f)[0] = 2 * (a - x[0]) + 4 * b * x[0] * (x[1] - x[0] * x[0]);
+    (*f)[1] = -2 * b * (x[1] - x[0] * x[0]);
   }
 };
 

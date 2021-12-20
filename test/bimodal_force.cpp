@@ -1,16 +1,16 @@
 #include <random>
 #include <iostream>
 #include <gtest/gtest.h>
-#include "hmc/rosenbrock.hpp"
+#include "hmc/bimodal.hpp"
 #include "hmc/force.hpp"
 
-TEST(RosenbrockTest, RosenbrockTest) {
+TEST(bimodal_force, test0) {
   int seed = 1234;
   int steps = 10;
   std::mt19937 engine(seed);
-  std::uniform_real_distribution<> dist;
+  std::uniform_real_distribution<> dist(-0.5, 0.5);
 
-  hmc::rosenbrock m;
+  hmc::bimodal m;
   int dim = 2;
 
   std::vector<double> x(dim);
